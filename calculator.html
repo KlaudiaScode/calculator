@@ -48,6 +48,12 @@
             font-weight: bold;
             border-radius: 3px;
         }
+        .equal{
+            grid-column: span 2;
+            font-size: 80px;
+            font-weight: bold;
+            border-radius: 3px;
+        }
     </style>
     <body>
     <div class="wrapper">
@@ -58,22 +64,22 @@
                 <button>1</button>
                 <button>2</button>
                 <button>3</button>
-                <button>c</button>
+                <button data-all-clear>c</button>
                 <button>4</button>
                 <button>5</button>
                 <button>6</button>
-                <button>⮨</button>
+                <button data-delete>⮨</button>
                 <button>7</button>
                 <button>8</button>
                 <button>9</button>
-                <button>*</button>
+                <button>x</button>
                 <button>0</button>
                 <button>.</button>
                 <button>%</button>
                 <button>/</button>
-                <button>=</button>
                 <button>+</button>
                 <button>-</button>
+                <button data-equals class="equal">=</button>
         </section>
         </div>
 	<script src="index.js"></script>
