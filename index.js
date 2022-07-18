@@ -2,20 +2,16 @@ const buttonsContainer = document.querySelector(`section.buttons`);
 
 const screenElement = document.querySelector('section.screen div');
 
-const equalsButton = document.querySelector('[data-equals]');
-
-const deleteButton = document.querySelector('[data-delete]');
-
-const allClearButton = document.querySelector('[data-all-clear]');
-
 const orderArray = [];
 
 let operatorExists = false;
 
 buttonsContainer.addEventListener('click', function(eventObject) {
 
-  console.log(eventObject.target.textContent);
-
+  if(eventObject.target.textContent === 'c'){
+    screenElement.textContent = '';
+    return;
+  }
   const currentScreenText = screenElement.textContent;
 
   screenElement.textContent = currentScreenText + eventObject.target.textContent;
@@ -23,7 +19,8 @@ buttonsContainer.addEventListener('click', function(eventObject) {
   const parsedValue = parseInt(eventObject.target.textContent,10);
   console.log(parsedValue);
 
-  if (!isNaN(parsedValue)){
+  const parsedValueIsNumber = !isNaN(parsedValue)
+  if (parsedValueIsNumber){
     if(!operatorExists){
       orderArray[0] = parseFloat(currentScreenText + eventObject.target.textContent);
     } else {
@@ -37,6 +34,9 @@ buttonsContainer.addEventListener('click', function(eventObject) {
         // tu będziemy liczyć
         const calculationResult = calculate (orderArray);
         screenElement.textContent = calculationResult + eventObject.target.textContent;
+        orderArray[0] = calculationResult;
+        orderArray[1] = eventObject.target.textContent;
+        orderArray[2] = '';
      }
   }
   console.log(Array.from(orderArray));
