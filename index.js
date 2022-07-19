@@ -12,11 +12,16 @@ buttonsContainer.addEventListener('click', function(eventObject) {
     screenElement.textContent = '';
     return;
   }
-  const currentScreenText = screenElement.textContent;
+  if(eventObject.target.textContent === '⮨'){
+    screenElement.textContent = screenElement.textContent.slice(0, -1);
+    return;
+  }
+const currentScreenText = screenElement.textContent;
 
   screenElement.textContent = currentScreenText + eventObject.target.textContent;
 
   const parsedValue = parseInt(eventObject.target.textContent,10);
+
   console.log(parsedValue);
 
   const parsedValueIsNumber = !isNaN(parsedValue)
@@ -31,7 +36,6 @@ buttonsContainer.addEventListener('click', function(eventObject) {
        orderArray.push(eventObject.target.textContent);
        operatorExists = true;
      } else {
-        // tu będziemy liczyć
         const calculationResult = calculate (orderArray);
         screenElement.textContent = calculationResult + eventObject.target.textContent;
         orderArray[0] = calculationResult;
@@ -54,8 +58,10 @@ function calculate(dataArray){
       return dataArray[0] - dataArray[2];
     case '/':
       return dataArray[0] / dataArray[2];
-    case '*':
+    case 'x':
       return dataArray[0] * dataArray[2];
+    case '%':
+      return (dataArray[0] * dataArray[2])/100;
   }
 }
 
