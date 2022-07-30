@@ -1,5 +1,5 @@
 //uchwyt do elementu section w którym są wszystkie przyciski
-const buttonsContainer = document.querySelector(`section.buttons`);
+const buttonsContainer = document.querySelector('section.buttons');
 //uchwyt do diva w którym wyświetlają się obliczenia
 const screenElement = document.querySelector('section.screen div');
 //tablica przechowująca aktualne działanie: [pierwsza liczba, operator, druga liczba]
@@ -55,7 +55,7 @@ buttonsContainer.addEventListener('click', function(eventObject) {
         orderArray[lastIndex] = parseFloat(newValue);
       }
     }
-    //operator ustawiony na false
+    //jeśli nie ma operatora zakończ działanie funkcji
     operatorExists = false;
     return;
   }
@@ -66,7 +66,7 @@ buttonsContainer.addEventListener('click', function(eventObject) {
       //na elementach tablicy wykonuje się funkcja
       propagateResult(orderArray);
     }
-    //operator ustawiony na false
+    //jeśli nie ma opertora zakończ działanie funkcji
     operatorExists = false;
     return;
   }
@@ -90,7 +90,7 @@ buttonsContainer.addEventListener('click', function(eventObject) {
   //zmienna przechowująca wynik próby sprowadzenia tekstu z klikniętego przycisku do liczby 
   const parsedValue = parseInt(eventObject.target.textContent, 10);
   //sprawdzenie czy wynik próby jest liczbą (nie jest NaN)
-  const parsedValueIsNumber = !isNaN(parsedValue)
+  const parsedValueIsNumber = !isNaN(parsedValue);
   //jeśli przeanalizowana wartość jest liczbą to
   if (parsedValueIsNumber){
     //ostatni indeks jest równy zero
@@ -110,7 +110,6 @@ console.log('lastValueAsString', lastValueAsString);
       // lub jesli jest to do ostatniej wartości zmienionej na string dodajemy kropkę 
       lastValueAsString = !lastValueAsString ? '0.' : lastValueAsString + '.' ;
     }
-console.log('numberIsDecimal', numberIsDecimal);
 console.log('lastIndex', lastIndex);
     //wartość pod ostatnim indeksem tablicy zawiera przetworzoną na liczbę ostatnią wartość zamienioną w string 
     //z ostatnią klikniętą liczbą
@@ -137,7 +136,7 @@ console.log('lastIndex', lastIndex);
 //funkcja wykonywania obliczeń na zawartości tablicy 
 function calculate(dataArray){
   //jeśli długość tej tablicy nie jest równa 3 to 
-  if(dataArray.length !== 3) {
+  if(dataArray.length !==3){
     //zakończ działanie funkcji
     return;
   }
@@ -158,10 +157,7 @@ function calculate(dataArray){
 //funkcja wyświetlania wyników obliczń
 function propagateResult(dataArray, operator){
   // zmienna przechuwje obliczenia
-  const calculationResult = calculate (dataArray);
-  if (calculationResult!==undefined){
-    return;
-  }
+  const calculationResult = calculate(dataArray);
   //na wyświtlaczu kalkulatora jeśli jest operator ma wyświetlić się wynik obliczenia plus operator 
   //lub jeśli nie ma operatora to wynik obliczenia 
   screenElement.textContent = operator ? calculationResult + operator : calculationResult;
