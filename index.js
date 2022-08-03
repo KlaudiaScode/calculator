@@ -71,7 +71,6 @@ buttonsContainer.addEventListener('click', function(eventObject) {
     return;
   }
   
-
   // obecnie wyświetlany tekst zawiera 
   const currentScreenText = screenElement.textContent;
   //jeśli klikniętym przyciskiem jest kropka to 
@@ -82,6 +81,9 @@ buttonsContainer.addEventListener('click', function(eventObject) {
       numberIsDecimal = true;
       //wyświetlacz kalkulatora zawiera to co wpisano plus to co aktualnie kliknięto
       screenElement.textContent = currentScreenText + eventObject.target.textContent;
+      //if(!orderArray.length){
+       // screenElement.textContent = '0.';
+      //}
     }
     return;
   }
@@ -106,9 +108,14 @@ buttonsContainer.addEventListener('click', function(eventObject) {
     //jeśli liczba jest ułamkiem to
     if(numberIsDecimal){
 console.log('lastValueAsString', lastValueAsString);
+      const lastValueLen = lastValueAsString.length; 
       //ostatnia wartość zmieniona na string zawiera 0. jeśli nie ma ostatniej wartości zamienionej na string
       // lub jesli jest to do ostatniej wartości zmienionej na string dodajemy kropkę 
-      lastValueAsString = !lastValueAsString ? '0.' : lastValueAsString + '.' ;
+      lastValueAsString = !lastValueAsString ? '0.' : lastValueAsString + '.';
+      if (!lastValueLen){
+        screenElement.textContent = screenElement.textContent.slice (0, -2) + lastValueAsString + eventObject.target.textContent;
+      }
+
     }
 console.log('lastIndex', lastIndex);
     //wartość pod ostatnim indeksem tablicy zawiera przetworzoną na liczbę ostatnią wartość zamienioną w string 
@@ -125,7 +132,14 @@ console.log('lastIndex', lastIndex);
      //w każdym innym przypadku (operator istnieje)
      } else {
        // wykonuje funkcję na tablicy i wpisanym tekście 
-        propagateResult(orderArray, eventObject.target.textContent);
+        if (orderArray.length === 3){
+          propagateResult(orderArray, eventObject.target.textContent);
+        } else {
+          orderArray[1] = eventObject.target.textContent;
+          screenElement.textContent = screenElement.textContent.slice (0, -2) + eventObject.target.textContent;
+        }
+        //tutaj trzeba zmienić na coś w rodzaju że jeśli operator już jest i klikniemy kolejny operator to ma on zastąpić poprzedni operator
+        //a jeśli kolejny operator nie będzie kliknięty to wykonaj funkcję propagateResult 
      }
   }
   //ułamek jest ustawiony na false 
@@ -136,7 +150,7 @@ console.log('lastIndex', lastIndex);
 //funkcja wykonywania obliczeń na zawartości tablicy 
 function calculate(dataArray){
   //jeśli długość tej tablicy nie jest równa 3 to 
-  if(dataArray.length !==3){
+  if(dataArray?.length !==3){
     //zakończ działanie funkcji
     return;
   }
@@ -154,7 +168,7 @@ function calculate(dataArray){
       return (dataArray[0] * dataArray[2])/100;
   }
 }
-//funkcja wyświetlania wyników obliczń
+//funkcja wyświetlania wyników obliczeń
 function propagateResult(dataArray, operator){
   // zmienna przechuwje obliczenia
   const calculationResult = calculate(dataArray);
@@ -168,7 +182,7 @@ function propagateResult(dataArray, operator){
     //drugim elementem tablicy ma być operator
     dataArray[1] = operator;
   } else {
-    //w przeciwnym razie usuwa ostatni element tablicy 
+    //w przeciwnym razie jeśli nie ma operatora usuwa ostatni element tablicy 
     dataArray.pop();
   }
     dataArray.pop();
